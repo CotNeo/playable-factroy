@@ -1,0 +1,19 @@
+FROM node:16-alpine as build
+
+WORKDIR /app
+
+# Bağımlılıkları kopyala ve yükle
+COPY frontend/package*.json ./
+RUN npm install
+
+# Uygulama kodunu kopyala
+COPY frontend/ ./
+
+# Production build oluştur
+RUN npm run build
+
+# Nginx ile sunmak için
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"] 

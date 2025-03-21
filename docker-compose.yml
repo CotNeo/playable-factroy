@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: todo-app-mongodb
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    container_name: todo-app-backend
+    restart: always
+    env_file:
+      - backend/.env
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/todo-app
+      - NODE_ENV=production
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    container_name: todo-app-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data: 
