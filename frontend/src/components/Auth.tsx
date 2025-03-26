@@ -110,6 +110,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
                       onChange={handleChange}
                       required
                       minLength={3}
+                      autoComplete="username"
                     />
                   </div>
                 </div>
@@ -132,6 +133,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    autoComplete="email"
                   />
                 </div>
               </div>
@@ -141,11 +143,6 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
                   <label className="block text-neutral-700 text-sm font-medium" htmlFor="password">
                     Password
                   </label>
-                  {isLogin && (
-                    <a href="#" className="text-xs text-primary-600 hover:text-primary-800 transition">
-                      Forgot password?
-                    </a>
-                  )}
                 </div>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -161,6 +158,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
                     onChange={handleChange}
                     required
                     minLength={6}
+                    autoComplete={isLogin ? "current-password" : "new-password"}
                   />
                 </div>
                 {!isLogin && (
@@ -191,17 +189,14 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
                   {isLogin ? "Don't have an account?" : "Already have an account?"}
                 </div>
                 
-                <a
-                  href={isLogin ? "/register" : "/login"}
+                <button
+                  type="button"
                   className="inline-flex items-center justify-center w-full px-4 py-2.5 border border-neutral-200 rounded-lg text-sm font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate(isLogin ? '/register' : '/login');
-                  }}
+                  onClick={() => navigate(isLogin ? '/register' : '/login')}
                 >
                   <i className={`fas ${isLogin ? 'fa-user-plus' : 'fa-sign-in-alt'} mr-2 text-primary-500`}></i>
                   {isLogin ? 'Create an Account' : 'Login'}
-                </a>
+                </button>
               </div>
             </form>
           </div>

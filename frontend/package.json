@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "author": "Furkan Akar (CotNeo) <https://github.com/CotNeo>",
-  "homepage": "https://cotneo.com",
   "description": "Playable Factory Software Engineer Pozisyonu için geliştirilmiş MERN To-Do Uygulaması",
   "license": "MIT",
   "dependencies": {

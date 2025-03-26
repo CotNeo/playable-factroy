@@ -107,13 +107,34 @@ const AppRoutes: React.FC = () => {
                 &copy; {new Date().getFullYear()} TaskMaster AI. All rights reserved.
               </p>
               <div className="flex space-x-4">
-                <a href="https://github.com/CotNeo" className="text-neutral-500 hover:text-primary-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                <a 
+                  href="https://github.com/CotNeo" 
+                  className="text-neutral-500 hover:text-primary-600 transition-colors" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="GitHub Profile"
+                  title="GitHub Profile"
+                >
                   <i className="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/furkanaliakar" className="text-neutral-500 hover:text-primary-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                <a 
+                  href="https://www.linkedin.com/in/furkanaliakar" 
+                  className="text-neutral-500 hover:text-primary-600 transition-colors" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn Profile"
+                  title="LinkedIn Profile"
+                >
                   <i className="fab fa-linkedin"></i>
                 </a>
-                <a href="https://cotneo.com" className="text-neutral-500 hover:text-primary-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                <a 
+                  href="https://cotneo.com" 
+                  className="text-neutral-500 hover:text-primary-600 transition-colors" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Personal Website"
+                  title="Personal Website"
+                >
                   <i className="fas fa-globe"></i>
                 </a>
               </div>

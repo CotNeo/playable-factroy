@@ -13,7 +13,7 @@
  * - https://github.com/iam-veeramalla/MERN-docker-compose/tree/compose/mern
  */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import apiService, { Todo, CreateTodoData, UpdateTodoData, getFullImageUrl, downloadFile, getFileNameFromUrl } from '../services/api';
 
 const TodoList: React.FC = () => {
