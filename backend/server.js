@@ -39,8 +39,19 @@ mongoose
     process.exit(1);
   });
 
-// Middleware
-app.use(cors());
+// CORS ayarları
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'https://your-frontend-domain.vercel.app', // Vercel'de deploy edildikten sonra buraya domain'i ekleyin
+    'https://*.vercel.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
