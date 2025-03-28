@@ -4,7 +4,7 @@ Bu proje, **MERN Stack** (MongoDB, Express.js, React, Node.js) kullanılarak gel
 
 ## **👨‍💻 Geliştirici Bilgileri**
 
-Bu proje, **Playable Factory** şirketi Software Engineer Pozisyonu için **Furkan Akar (CotNeo)** tarafından hazırlanmıştır.
+Bu proje, **Playable Factory** Şirketi Software Engineer Pozisyonu için **Furkan Akar (CotNeo)** tarafından hazırlanmıştır.
 
 - **Geliştirici**: Furkan Akar
 - **GitHub**: [@CotNeo](https://github.com/CotNeo)
@@ -35,41 +35,41 @@ Bu uygulamanın temel hedefleri şunlardır:
 ## **📂 Proje Dosya Yapısı**
 ```
 mern-todo-app/
-│── backend/
+├── backend/
+│   ├── config/                      # Cloudinary konfigürasyonu
 │   ├── models/
-│   │   ├── Todo.js                  # To-Do modeli (title, description, recommendations, completed, image, user)
-│   │   ├── User.js                  # Kullanıcı modeli (JWT kimlik doğrulama için)
-│   │   ├── routes/
-│   │   │   ├── todoRoutes.js            # To-Do CRUD işlemleri ve OpenAI öneri entegrasyonu
-│   │   │   ├── authRoutes.js            # Kullanıcı giriş/kayıt işlemleri
+│   │   ├── Todo.js                # To-Do modeli
+│   │   ├── User.js                # Kullanıcı modeli
+│   ├── routes/
+│   │   ├── todoRoutes.js         # To-Do CRUD + OpenAI entegrasyonu
+│   │   ├── authRoutes.js         # Kullanıcı auth işlemleri
+│   ├── services/
+│   │   ├── openaiService.js      # OpenAI API entegrasyonu
+│   ├── middleware/
+│   │   ├── authMiddleware.js     # JWT middleware
+│   ├── uploads/                  # Yüklenen görsellerin tutulduğu klasör
+│   ├── .env                      # Çevresel değişkenler
+│   ├── server.js                 # Sunucuyu başlatan dosya
+│   ├── package.json
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── TodoList.tsx     # To-Do bileseni
+│   │   │   ├── Auth.tsx         # Login/Register bileseni
+│   │   │   ├── Navbar.tsx       # Navbar
 │   │   ├── services/
-│   │   │   ├── openaiService.js         # OpenAI API entegrasyonu (GPT'den öneri almak için)
-│   │   ├── middleware/
-│   │   │   ├── authMiddleware.js        # JWT kimlik doğrulama middleware
-│   │   ├── uploads/                     # Kullanıcıların yüklediği resimler burada saklanır
-│   │   ├── .env                         # API anahtarları ve çevresel değişkenler (MongoDB, OpenAI, JWT)
-│   │   ├── server.js                    # Express sunucusunu başlatan ana dosya
-│   │   ├── package.json                 # Backend bağımlılıkları
-│   │── frontend/
-│   │   ├── public/                      # Statik dosyalar
-│   │   ├── src/
-│   │   │   ├── components/
-│   │   │   │   ├── TodoList.tsx         # Ana ToDo görev yönetimi bileşeni
-│   │   │   │   ├── Auth.tsx             # Kullanıcı giriş ve kayıt formları bileşeni
-│   │   │   │   ├── Navbar.tsx           # Navigasyon bileşeni
-│   │   │   ├── services/
-│   │   │   │   ├── api.ts               # Backend API ile iletişim için servis
-│   │   │   ├── contexts/
-│   │   │   │   ├── AuthContext.tsx      # Kimlik doğrulama contexti
-│   │   │   ├── pages/
-│   │   │   │   ├── Home.tsx             # Ana sayfa
-│   │   │   │   ├── Login.tsx            # Giriş sayfası
-│   │   │   │   ├── Register.tsx         # Kayıt sayfası
-│   │   │   ├── App.tsx                  # Ana uygulama bileşeni
-│   │   │   ├── index.tsx                # Uygulama giriş noktası
-│   │   ├── package.json                 # Frontend bağımlılıkları
-│   │── README.md                        # Proje dökümantasyonu
-│   └── README_NEW.md
+│   │   │   ├── api.ts           # API servisleri
+│   │   ├── contexts/
+│   │   │   ├── AuthContext.tsx  # Auth context
+│   │   ├── pages/
+│   │   │   ├── Home.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── Register.tsx
+│   │   ├── App.tsx
+│   │   ├── index.tsx
+│   ├── package.json
+├── README.md
 ```
 
 ---
@@ -77,92 +77,87 @@ mern-todo-app/
 ## **🔧 Teknolojiler**
 
 ### **Backend**
-- **Node.js**: JavaScript runtime
-- **Express.js**: Web framework
-- **MongoDB**: NoSQL veritabanı
-- **Mongoose**: MongoDB ODM
-- **JWT**: Kimlik doğrulama
-- **OpenAI API**: AI önerileri için
-- **Multer**: Dosya yükleme işlemleri
+- **Node.js**
+- **Express.js**
+- **MongoDB + Mongoose**
+- **JWT**
+- **OpenAI API**
+- **Multer** + **Cloudinary**
 
 ### **Frontend**
-- **React**: UI kütüphanesi
-- **TypeScript**: Tip güvenliği
-- **Axios**: HTTP istekleri
-- **React Router**: Sayfa yönlendirme
-- **Tailwind CSS**: UI tasarımı
+- **React** + **TypeScript**
+- **Axios**
+- **React Router**
+- **Tailwind CSS**
 
 ---
 
 ## **📋 Özellikler**
 
-1. **Kullanıcı Kimlik Doğrulama**
-   - JWT tabanlı kimlik doğrulama
-   - Kayıt, giriş ve çıkış işlemleri
-   
-2. **Görev Yönetimi**
-   - Görev oluşturma, düzenleme, silme
-   - Görevleri tamamlandı olarak işaretleme
-   - Başlık ve açıklamaya göre görev arama
-   
-3. **AI Destekli Öneriler**
-   - OpenAI GPT entegrasyonu
-   - Görev başlığı ve açıklamasına dayalı öneriler
-   - Önerileri yenileme özelliği
-   
-4. **Dosya Yükleme**
-   - Görevlere resim ekleme
-   - Dosya boyutu doğrulama
-   - Resim önizleme
-
-5. **Kullanıcı Arayüzü**
-   - Modern ve duyarlı tasarım
-   - Kolay kullanım
-   - Gerçek zamanlı bildirimler
+1. **JWT Kimlik Doğrulama**
+2. **CRUD Görev Yönetimi**
+3. **OpenAI Destekli Öneriler**
+4. **Dosya / Resim Yükleme**
+5. **Responsive Arayüz**
 
 ---
 
-## **🚀 Kurulum ve Çalıştırma**
+## **🚀 Dağıtım**
+
+- **Live Backend (Render):** [https://todo-backend-oxw7.onrender.com/](https://todo-backend-oxw7.onrender.com/)
+- **Live Frontend (Vercel):** [https://todo-frontend-icmrcffq2-cotneos-projects.vercel.app/login](https://todo-frontend-icmrcffq2-cotneos-projects.vercel.app/login)
+
+---
+
+## **📆 Kurulum**
 
 ### **Gereksinimler**
 - Node.js (v14+)
-- MongoDB
-- OpenAI API anahtarı
+- MongoDB Atlas
+- OpenAI API Key
 
-### **Backend Kurulumu**
-1. Repo'yu klonlayın
-2. Backend klasörüne gidin: `cd backend`
-3. Bağımlılıkları yükleyin: `npm install`
-4. `.env` dosyasını oluşturun:
-   ```
-   PORT=5001
-   NODE_ENV=development
-   MONGODB_URI=<your_mongodb_connection_string>
-   JWT_SECRET=<your_jwt_secret>
-   OPENAI_API_KEY=<your_openai_api_key>
-   ```
-5. Sunucuyu başlatın: `npm run dev`
+### **Backend**
+```bash
+cd backend
+npm install
+# .env dosyasını oluşturun
+PORT=5001
+NODE_ENV=development
+MONGODB_URI=<your_mongodb_connection_string>
+JWT_SECRET=<your_jwt_secret>
+OPENAI_API_KEY=<your_openai_api_key>
+CLOUDINARY_CLOUD_NAME=<cloudinary_name>
+CLOUDINARY_API_KEY=<cloudinary_api_key>
+CLOUDINARY_API_SECRET=<cloudinary_api_secret>
 
-### **Frontend Kurulumu**
-1. Frontend klasörüne gidin: `cd frontend`
-2. Bağımlılıkları yükleyin: `npm install`
-3. Geliştirme sunucusunu başlatın: `npm start`
-4. Tarayıcıda şu adresi açın: `http://localhost:3000`
+npm run dev
+```
+
+### **Frontend**
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Tarayıcıda şu adresi açarak test edebilirsiniz:
+[http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## **🔍 Notlar**
 
-- OpenAI API anahtarı olmadan uygulama çalışır, ancak öneriler yerel olarak üretilir.
-- Backend, `backend/uploads` klasörünü otomatik olarak oluşturur.
-- Uygulama, MongoDB Atlas veya yerel MongoDB sunucusu ile çalışabilir.
+- OpenAI API anahtarı yoksa, öneriler yerine yerel metin döner.
+- `uploads/` klasörü sunucu tarafında otomatik oluşur.
+- MongoDB Atlas veya yerel MongoDB desteklenir.
 
 ---
 
 ## **📝 Lisans**
 
-Bu proje MIT Lisansı altında lisanslanmıştır.
+MIT Lisansı
 
 ---
 
-Bu uygulama, Playable Factory Software Engineer pozisyonu için teknik değerlendirme amacıyla oluşturulmuştur. 
+Bu uygulama, **Playable Factory Software Engineer** pozisyonu için teknik değerlendirme amacıyla oluşturulmuştur.
+
