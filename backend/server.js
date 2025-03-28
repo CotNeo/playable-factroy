@@ -43,7 +43,8 @@ mongoose
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://todo-frontend-cyan-eta.vercel.app', // Vercel'deki frontend domain'i
+    'https://todo-frontend-cyan-eta.vercel.app',
+    'https://todo-frontend-icmrcffq2-cotneos-projects.vercel.app',
     'https://*.vercel.app'
   ],
   credentials: true,
