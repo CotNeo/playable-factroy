@@ -43,12 +43,14 @@ mongoose
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://your-frontend-domain.vercel.app', // Vercel'de deploy edildikten sonra buraya domain'i ekleyin
+    'https://todo-frontend-cyan-eta.vercel.app', // Vercel'deki frontend domain'i
     'https://*.vercel.app'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  maxAge: 600 // 10 dakika
 };
 
 app.use(cors(corsOptions));

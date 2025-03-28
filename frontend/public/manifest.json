@@ -1,6 +1,6 @@
 {
-  "short_name": "AI Todo",
-  "name": "AI-Powered Todo Application",
+  "short_name": "Todo App",
+  "name": "AI Powered Todo Application",
   "icons": [
     {
       "src": "favicon.ico",

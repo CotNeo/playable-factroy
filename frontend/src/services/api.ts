@@ -6,16 +6,14 @@
  */
 
 import axios, { InternalAxiosRequestConfig } from 'axios';
+import { API_URL } from '../constants';
 
 // ============================
 // 🔧 Geliştirme Ortamı Ayarları
 // ============================
 
-// API endpoint'i doğrudan localhost üzerinden çalışır
-const API_URL = 'http://localhost:5001/api'; // Backend'in dev sunucusu
-
 // Görseller ve dosyalar için temel URL
-const BASE_URL = 'http://localhost:5001';
+const BASE_URL = API_URL;
 
 // ============================
 // 📸 Yardımcı Fonksiyonlar
@@ -116,21 +114,38 @@ export interface UpdateTodoData {
 // 🔌 Axios Instance ve Interceptor
 // ============================
 
-// Axios istemcisi oluştur
-const apiClient = axios.create({
-  baseURL: API_URL,
+// API istekleri için axios instance
+const api = axios.create({
+  baseURL: `${API_URL}/api`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// Tüm isteklere otomatik olarak Bearer Token ekle
-apiClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+// Request interceptor - her istekte token'ı ekle
+api.interceptors.request.use(
+  (config) => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user && user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor - hata durumunda token'ı temizle
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
 );
 
 // ============================
@@ -142,7 +157,7 @@ const apiService = {
    * Kullanıcı girişi (Login)
    */
   async login(credentials: LoginCredentials): Promise<User> {
-    const res = await apiClient.post('/auth/login', credentials);
+    const res = await api.post('/auth/login', credentials);
     if (res.data) {
       localStorage.setItem('user', JSON.stringify(res.data));
     }
@@ -153,7 +168,7 @@ const apiService = {
    * Yeni kullanıcı kaydı (Register)
    */
   async register(credentials: RegisterCredentials): Promise<User> {
-    const res = await apiClient.post('/auth/register', credentials);
+    const res = await api.post('/auth/register', credentials);
     if (res.data) {
       localStorage.setItem('user', JSON.stringify(res.data));
     }
@@ -171,7 +186,7 @@ const apiService = {
    * Tüm görevleri getirir
    */
   async getTodos(): Promise<Todo[]> {
-    const res = await apiClient.get('/todos');
+    const res = await api.get('/todos');
     return res.data;
   },
 
@@ -179,7 +194,7 @@ const apiService = {
    * ID ile tek görev getirir
    */
   async getTodoById(id: string): Promise<Todo> {
-    const res = await apiClient.get(`/todos/${id}`);
+    const res = await api.get(`/todos/${id}`);
     return res.data;
   },
 
@@ -202,7 +217,7 @@ const apiService = {
       formData.append('image', todoData.image);
     }
 
-    const res = await apiClient.post('/todos', formData, {
+    const res = await api.post('/todos', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
@@ -221,7 +236,7 @@ const apiService = {
     if (todoData.getRecommendations) formData.append('getRecommendations', 'true');
     if (todoData.image) formData.append('image', todoData.image);
 
-    const res = await apiClient.put(`/todos/${id}`, formData, {
+    const res = await api.put(`/todos/${id}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
@@ -232,14 +247,14 @@ const apiService = {
    * Görevi siler
    */
   async deleteTodo(id: string): Promise<void> {
-    await apiClient.delete(`/todos/${id}`);
+    await api.delete(`/todos/${id}`);
   },
 
   /**
    * Arama sorgusuna göre görevleri getirir
    */
   async searchTodos(query: string): Promise<Todo[]> {
-    const res = await apiClient.get(`/todos/search?query=${query}`);
+    const res = await api.get(`/todos/search?query=${query}`);
     return res.data;
   },
 };
