@@ -22,6 +22,7 @@ const fs = require('fs');
 // Import routes
 const authRoutes = require('./routes/authRoutes');
 const todoRoutes = require('./routes/todoRoutes');
+const fileRoutes = require('./routes/fileRoutes');
 
 // Initialize Express app
 const app = express();
@@ -65,6 +66,7 @@ if (!isVercel) {
 // Define API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/todos', todoRoutes);
+app.use('/api/files', fileRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -77,19 +79,17 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Serve static assets in production but not on Vercel
-// On Vercel, frontend will be a separate deployment
-if (isProduction && !isVercel) {
-  // Serve frontend build files
+// Production ortamında frontend dosyalarını serve et
+if (isProduction) {
   const staticDir = path.join(__dirname, '../frontend/build');
   
   if (fs.existsSync(staticDir)) {
     console.log('Serving static frontend files from:', staticDir);
     app.use(express.static(staticDir));
     
-    // For any other routes, serve the React app
+    // Tüm non-API isteklerini React app'e yönlendir
     app.get('*', (req, res) => {
-      if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+      if (!req.path.startsWith('/api')) {
         res.sendFile(path.join(staticDir, 'index.html'));
       }
     });
@@ -108,13 +108,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server for local development
-// In Vercel, this is not needed as Vercel handles the server
-if (!isVercel) {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
-  });
-}
+// Server'ı başlat
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
+});
 
 // For Vercel, we need to export the Express app
 module.exports = app; 
